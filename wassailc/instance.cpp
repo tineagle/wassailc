@@ -5,7 +5,7 @@
 
 #include "engineutils.h"
 
-vk::Instance createInstance() {
+void GraphicsEngine::createInstance() {
     vk::ApplicationInfo appInfo{
         "Test App", VK_MAKE_VERSION(1, 0, 0),
         "Test Engine", VK_MAKE_VERSION(1, 0, 0),
@@ -26,7 +26,7 @@ vk::Instance createInstance() {
         (uint32_t) pExtensions.size(), pExtensions.data()
     };
 
-    return vk::createInstance(
+    instance = vk::createInstance(
         createInfo
     );
 }

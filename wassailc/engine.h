@@ -1,6 +1,25 @@
 #pragma once
 
-typedef struct GraphicsEngine GraphicsEngine;
+#include "vulkan/vulkan.hpp"
 
-GraphicsEngine* createGraphicsEngine();
-void destroyGraphicsEngine(GraphicsEngine* engine);
+struct QueueInfo {
+    uint32_t index;
+    std::vector<float> priorities;
+};
+
+class GraphicsEngine {
+private:
+    vk::Instance instance;
+    vk::PhysicalDevice physicalDevice;
+    std::vector<QueueInfo> queueInfos;
+    vk::Device device;
+
+public:
+    GraphicsEngine();
+    ~GraphicsEngine();
+private:
+    void createInstance();
+    void setPhysicalDevice();
+    void getQueueInfos();
+    void createDevice();
+};

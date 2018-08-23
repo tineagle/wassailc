@@ -1,8 +1,7 @@
 #pragma once
 
 #include "core.h"
-
-vk::Instance createInstance();
+#include "engine.h"
 
 std::vector<std::string> getInstanceLayers();
 bool checkInstanceLayers(const std::vector<std::string> &layerNames);

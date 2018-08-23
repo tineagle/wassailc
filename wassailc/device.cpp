@@ -1,11 +1,27 @@
 #include "device.h"
 
 #include <iostream>
+#include <set>
 
-vk::Device createDevice(vk::PhysicalDevice physicalDevice) {
-    vk::Device device;
+#include "engineutils.h"
 
-    auto queueCreateInfos = getQueueCreateInfos(physicalDevice);
+void GraphicsEngine::getQueueInfos() {
+    auto families = physicalDevice.getQueueFamilyProperties();
+
+    // Select graphics/present queues
+    uint32_t graphicsIndex = getQueueIndex(families, isGraphicsFamilySuitable);
+    uint32_t presentIndex = getQueueIndex(families, isPresentFamilySuitable);
+    std::set<uint32_t> indices{ { graphicsIndex, presentIndex } };
+
+    queueInfos.clear();
+    for (const auto &index : indices) {
+        std::vector<float> priorities = getQueuePriorities(families[index]);
+        queueInfos.push_back(QueueInfo{ index, priorities });
+    }
+}
+
+void GraphicsEngine::createDevice() {
+    auto queueCreateInfos = getQueueCreateInfos(queueInfos);
 
     auto layers = getDeviceLayers();
     checkDeviceLayers(physicalDevice, layers);
@@ -14,7 +30,7 @@ vk::Device createDevice(vk::PhysicalDevice physicalDevice) {
     auto extensions = getDeviceExtensions();
     checkDeviceExtensions(physicalDevice, extensions, layers);
     auto pExtensions = toCStrings(extensions);
-
+    
     vk::DeviceCreateInfo createInfo{
         vk::DeviceCreateFlags(),
         (uint32_t) queueCreateInfos.size(), queueCreateInfos.data(),
@@ -22,29 +38,26 @@ vk::Device createDevice(vk::PhysicalDevice physicalDevice) {
         (uint32_t) pExtensions.size(), pExtensions.data()
     };
 
-    return physicalDevice.createDevice(createInfo);
+    device = physicalDevice.createDevice(createInfo);
 }
 
-std::vector<float> getQueuePriority(vk::QueueFamilyProperties family) {
+std::vector<float> getQueuePriorities(const vk::QueueFamilyProperties &family) {
     return {
         1.0f
     };
 }
 
-typedef bool (*fFamilySuitable)(const vk::QueueFamilyProperties&);
 
 uint32_t getQueueIndex(const std::vector<vk::QueueFamilyProperties> &families, fFamilySuitable pred) {
-    uint32_t graphicsIndex = ~0;
-
     uint32_t currentIndex = 0;
     for (const auto& family : families) {
         // Check for suitability
         if (pred(family)) {
-            graphicsIndex = currentIndex;
+            return currentIndex;
         }
         ++currentIndex;
     }
-    return graphicsIndex;
+    return ~0;
 }
 
 bool isGraphicsFamilySuitable(const vk::QueueFamilyProperties &family) {
@@ -55,13 +68,16 @@ bool isPresentFamilySuitable(const vk::QueueFamilyProperties &family) {
     return true;
 }
 
-std::vector<vk::DeviceQueueCreateInfo> getQueueCreateInfos(vk::PhysicalDevice physicalDevice) {
-    auto families = physicalDevice.getQueueFamilyProperties();
-    // Select graphics/present queues
-    uint32_t graphicsQueueFamilyIndex = getQueueIndex(families, isGraphicsFamilySuitable);
-    uint32_t presentQueueFamilyIndex = getQueueIndex(families, isPresentFamilySuitable);
-
-    return {};
+std::vector<vk::DeviceQueueCreateInfo> getQueueCreateInfos(const std::vector<QueueInfo> &queueInfos) {
+    std::vector<vk::DeviceQueueCreateInfo> queueCreateInfos;
+    for (const auto &queueInfo : queueInfos) {
+        vk::DeviceQueueCreateInfo createInfo{
+            vk::DeviceQueueCreateFlags(), queueInfo.index,
+            (uint32_t) queueInfo.priorities.size(), queueInfo.priorities.data()
+        };
+        queueCreateInfos.push_back(createInfo);
+    }
+    return queueCreateInfos;
 }
 
 std::vector<std::string> getDeviceLayers() {

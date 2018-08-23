@@ -1,6 +1,9 @@
 #include "engine.h"
 
+#include "GLFW/glfw3.h"
+
 int main() {
-    GraphicsEngine* e = createGraphicsEngine();
-    destroyGraphicsEngine(e);
+    glfwInit();
+    GraphicsEngine e;
+    glfwTerminate();
 }

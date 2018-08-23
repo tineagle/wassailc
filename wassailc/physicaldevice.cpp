@@ -1,8 +1,6 @@
 #include "physicaldevice.h"
 
-vk::PhysicalDevice getPhysicalDevice(vk::Instance instance) {
-    vk::PhysicalDevice physicalDevice;
-
+void GraphicsEngine::setPhysicalDevice() {
     auto devices = instance.enumeratePhysicalDevices();
     for (const auto &device : devices) {
         auto features = device.getFeatures();
@@ -11,7 +9,6 @@ vk::PhysicalDevice getPhysicalDevice(vk::Instance instance) {
             break;
         }
     }
-    return physicalDevice;
 }
 
 bool checkPhysicalDevice(const vk::PhysicalDeviceFeatures &features) {

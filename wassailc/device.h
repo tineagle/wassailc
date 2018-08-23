@@ -1,12 +1,15 @@
 #pragma once
 
 #include "core.h"
-#include "engineutils.h"
+#include "engine.h"
 
-vk::Device createDevice(vk::PhysicalDevice physicalDevice);
+typedef bool(*fFamilySuitable)(const vk::QueueFamilyProperties&);
+uint32_t getQueueIndex(const std::vector<vk::QueueFamilyProperties> &families, fFamilySuitable pred);
+bool isGraphicsFamilySuitable(const vk::QueueFamilyProperties &family);
+bool isPresentFamilySuitable(const vk::QueueFamilyProperties &family);
 
-std::vector<float> getQueuePriority(vk::QueueFamilyProperties family);
-std::vector<vk::DeviceQueueCreateInfo> getQueueCreateInfos(vk::PhysicalDevice physicalDevice);
+std::vector<float> getQueuePriorities(const vk::QueueFamilyProperties &family);
+std::vector<vk::DeviceQueueCreateInfo> getQueueCreateInfos(const std::vector<QueueInfo> &queueInfos);
 
 std::vector<std::string> getDeviceLayers();
 bool checkDeviceLayers(vk::PhysicalDevice physicalDevice, const std::vector<std::string> &layers);
