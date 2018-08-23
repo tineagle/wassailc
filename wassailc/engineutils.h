@@ -1,14 +1,13 @@
 #pragma once
 
+#include <string>
+
 #include "core.h"
 
-DEFINE_ARRAY(String, char*)
-DEFINE_ARRAY(VkExtProp, VkExtensionProperties)
-DEFINE_ARRAY(VkExtPropArray, VkExtPropArray)
-DEFINE_ARRAY(VkLayerProp, VkLayerProperties)
+std::vector<const char*> toCStrings(const std::vector<std::string> &strings);
 
-bool checkLayer(char* layerName, VkLayerPropArray layers);
-bool checkLayers(StringArray layers, VkLayerPropArray availLayers);
-bool checkExtension(char* extensionName, VkExtPropArray extensions);
-bool checkExtensions(StringArray extensions, VkExtPropArray availExtensions);
-VkExtPropArray flattenExtPropArrays(VkExtPropArray defaultExtensions, VkExtPropArrayArray layerExtensions);
+bool checkLayer(const std::string &layer, const std::vector<vk::LayerProperties> &layers);
+bool checkLayers(const std::vector<std::string> &layers, const std::vector<vk::LayerProperties> &availLayers);
+bool checkExtension(const std::string &extension, const std::vector<vk::ExtensionProperties> &extensions);
+bool checkExtensions(const std::vector<std::string> &extensions, const std::vector<vk::ExtensionProperties> &availExtensions);
+std::vector<vk::ExtensionProperties> flattenExtPropArrays(const std::vector<vk::ExtensionProperties> &defaultExtensions, const std::vector<std::vector<vk::ExtensionProperties>> &totalLayerExtensions);

@@ -1,16 +1,13 @@
 #pragma once
 
 #include "core.h"
-#include "engineutils.h"
 
-VkInstance createInstance();
+vk::Instance createInstance();
 
-StringArray getInstanceLayers();
-VkResult enumerateInstanceLayerProperties(VkLayerPropArray* layerArray);
-bool checkInstanceLayers(StringArray layerNames);
+std::vector<std::string> getInstanceLayers();
+bool checkInstanceLayers(const std::vector<std::string> &layerNames);
 
 
-StringArray getInstanceExtensions();
-VkResult enumerateInstanceExtensionProperties(const char* layerName, VkExtPropArray* extensionArray);
-VkExtPropArray enumerateAllInstanceExtensionProperties(StringArray layers);
-bool checkInstanceExtensions(StringArray extensions, StringArray layers);
+std::vector<std::string> getInstanceExtensions();
+std::vector<vk::ExtensionProperties> enumerateAllInstanceExtensionProperties(const std::vector<std::string> &layers);
+bool checkInstanceExtensions(const std::vector<std::string> &extensions, const std::vector<std::string> &layers);

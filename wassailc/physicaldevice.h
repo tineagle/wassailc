@@ -2,6 +2,6 @@
 
 #include "core.h"
 
-VkPhysicalDevice getPhysicalDevice(VkInstance instance);
+vk::PhysicalDevice getPhysicalDevice(vk::Instance instance);
 
-bool checkPhysicalDevice(VkPhysicalDeviceFeatures features);
+bool checkPhysicalDevice(const vk::PhysicalDeviceFeatures &features);

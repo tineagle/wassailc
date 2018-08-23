@@ -15,22 +15,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="instance.c">
+    <ClCompile Include="instance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="device.c">
+    <ClCompile Include="engineutils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="physicaldevice.c">
+    <ClCompile Include="device.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engineutils.c">
+    <ClCompile Include="engine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine.c">
+    <ClCompile Include="physicaldevice.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="wassail.c">
+    <ClCompile Include="wassail.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

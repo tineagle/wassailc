@@ -76,7 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <CompileAs>CompileAsC</CompileAs>
+      <CompileAs>Default</CompileAs>
       <CLanguageStandard>gnu11</CLanguageStandard>
       <AdditionalIncludeDirectories>C:\glfw-3.2.1.bin.WIN32\include;C:\VulkanSDK\1.1.73.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-D_CRT_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
@@ -85,6 +85,7 @@
       <AdditionalLibraryDirectories>C:\glfw-3.2.1.bin.WIN32\lib-vc2015;C:\VulkanSDK\1.1.73.0\Lib32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>vulkan-1.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -100,6 +101,7 @@
       <AdditionalLibraryDirectories>C:\glfw-3.2.1.bin.WIN64\lib-vc2015;C:\VulkanSDK\1.1.73.0\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>vulkan-1.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -141,12 +143,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="device.c" />
-    <ClCompile Include="engineutils.c" />
-    <ClCompile Include="instance.c" />
-    <ClCompile Include="physicaldevice.c" />
-    <ClCompile Include="engine.c" />
-    <ClCompile Include="wassail.c" />
+    <ClCompile Include="device.cpp" />
+    <ClCompile Include="engineutils.cpp" />
+    <ClCompile Include="instance.cpp" />
+    <ClCompile Include="physicaldevice.cpp" />
+    <ClCompile Include="engine.cpp" />
+    <ClCompile Include="wassail.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="array.h" />
