@@ -5,23 +5,14 @@
 
 #include "engineutils.h"
 
-void GraphicsEngine::getQueueInfos() {
-    auto families = physicalDevice.getQueueFamilyProperties();
-
-    // Select graphics/present queues
-    uint32_t graphicsIndex = getQueueIndex(families, isGraphicsFamilySuitable);
-    uint32_t presentIndex = getQueueIndex(families, isPresentFamilySuitable);
-    std::set<uint32_t> indices{ { graphicsIndex, presentIndex } };
-
-    queueInfos.clear();
-    for (const auto &index : indices) {
-        std::vector<float> priorities = getQueuePriorities(families[index]);
-        queueInfos.push_back(QueueInfo{ index, priorities });
-    }
-}
+#include <map>
 
 void GraphicsEngine::createDevice() {
-    auto queueCreateInfos = getQueueCreateInfos(queueInfos);
+    auto families = physicalDevice.getQueueFamilyProperties();
+    uint32_t graphicsIndex = getQueueIndex(families, isGraphicsFamilySuitable);
+    uint32_t presentIndex = getQueueIndex(families, isPresentFamilySuitable);
+    std::vector<float> priorities = { 1.0f };
+    auto queueCreateInfos = getQueueCreateInfos(graphicsIndex, presentIndex, priorities);
 
     auto layers = getDeviceLayers();
     checkDeviceLayers(physicalDevice, layers);
@@ -39,14 +30,17 @@ void GraphicsEngine::createDevice() {
     };
 
     device = physicalDevice.createDevice(createInfo);
+    graphicsQueue = device.getQueue(graphicsIndex, 0);
+    presentQueue = device.getQueue(presentIndex, 0);
 }
 
-std::vector<float> getQueuePriorities(const vk::QueueFamilyProperties &family) {
-    return {
-        1.0f
-    };
+bool isGraphicsFamilySuitable(const vk::QueueFamilyProperties &family) {
+    return true;
 }
 
+bool isPresentFamilySuitable(const vk::QueueFamilyProperties &family) {
+    return true;
+}
 
 uint32_t getQueueIndex(const std::vector<vk::QueueFamilyProperties> &families, fFamilySuitable pred) {
     uint32_t currentIndex = 0;
@@ -60,20 +54,14 @@ uint32_t getQueueIndex(const std::vector<vk::QueueFamilyProperties> &families, f
     return ~0;
 }
 
-bool isGraphicsFamilySuitable(const vk::QueueFamilyProperties &family) {
-    return true;
-}
+std::vector<vk::DeviceQueueCreateInfo> getQueueCreateInfos(uint32_t graphicsIndex, uint32_t presentIndex, const std::vector<float> &priorities) {
+    std::set<uint32_t> indices{ {graphicsIndex, presentIndex} };
 
-bool isPresentFamilySuitable(const vk::QueueFamilyProperties &family) {
-    return true;
-}
-
-std::vector<vk::DeviceQueueCreateInfo> getQueueCreateInfos(const std::vector<QueueInfo> &queueInfos) {
     std::vector<vk::DeviceQueueCreateInfo> queueCreateInfos;
-    for (const auto &queueInfo : queueInfos) {
+    for (const auto &index : indices) {
         vk::DeviceQueueCreateInfo createInfo{
-            vk::DeviceQueueCreateFlags(), queueInfo.index,
-            (uint32_t) queueInfo.priorities.size(), queueInfo.priorities.data()
+            vk::DeviceQueueCreateFlags(), index,
+            (uint32_t) priorities.size(), priorities.data()
         };
         queueCreateInfos.push_back(createInfo);
     }

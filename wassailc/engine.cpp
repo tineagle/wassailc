@@ -6,7 +6,6 @@
 GraphicsEngine::GraphicsEngine() {
     createInstance();
     setPhysicalDevice();
-    getQueueInfos();
     createDevice();
 }
 

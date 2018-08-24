@@ -8,8 +8,7 @@ uint32_t getQueueIndex(const std::vector<vk::QueueFamilyProperties> &families, f
 bool isGraphicsFamilySuitable(const vk::QueueFamilyProperties &family);
 bool isPresentFamilySuitable(const vk::QueueFamilyProperties &family);
 
-std::vector<float> getQueuePriorities(const vk::QueueFamilyProperties &family);
-std::vector<vk::DeviceQueueCreateInfo> getQueueCreateInfos(const std::vector<QueueInfo> &queueInfos);
+std::vector<vk::DeviceQueueCreateInfo> getQueueCreateInfos(uint32_t graphicsIndex, uint32_t presentIndex, const std::vector<float> &priorities);
 
 std::vector<std::string> getDeviceLayers();
 bool checkDeviceLayers(vk::PhysicalDevice physicalDevice, const std::vector<std::string> &layers);
