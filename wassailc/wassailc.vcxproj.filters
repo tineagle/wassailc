@@ -15,22 +15,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="instance.cpp">
+    <ClCompile Include="wassail.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engineutils.cpp">
+    <ClCompile Include="main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="device.cpp">
+    <ClCompile Include="engine.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine.cpp">
+    <ClCompile Include="instance.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="physicaldevice.cpp">
+    <ClCompile Include="physicaldevice.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="wassail.cpp">
+    <ClCompile Include="device.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,16 +44,19 @@
     <ClInclude Include="device.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="core.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="physicaldevice.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engineutils.h">
+    <ClInclude Include="engine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine.h">
+    <ClInclude Include="surface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wassail.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,20 +1,12 @@
 #pragma once
 
-#include "vulkan/vulkan.hpp"
+#include "core.h"
 
-class GraphicsEngine {
-private:
-    vk::Instance instance;
-    vk::PhysicalDevice physicalDevice;
-    vk::Device device;
-    vk::Queue graphicsQueue;
-    vk::Queue presentQueue;
+VkInstance createInstance();
+VkPhysicalDevice getPhysicalDevice(VkInstance instance);
 
-public:
-    GraphicsEngine();
-    ~GraphicsEngine();
-private:
-    void createInstance();
-    void setPhysicalDevice();
-    void createDevice();
-};
+StringArray getInstanceLayers();
+StringArray getInstanceExtensions();
+
+StringArray getDeviceLayers();
+StringArray getDeviceExtensions();
